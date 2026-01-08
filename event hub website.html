@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Invite Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        body {                                                  
+            background: #f8f4f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: #312f30;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: headerDrop 1s ease;
+        }
+
+        @keyframes headerDrop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #f6f7f5;
+        }
+
+        .header nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #f8fcf8;
+            font-weight: 500;
+        }
+
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 8%;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeLeft 1.2s ease;
+        }
+
+        @keyframes fadeLeft {
+            from { transform: translateX(-70px) rotate(-3deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0); opacity: 1; }
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            color: #030303;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .hero-text button {
+            padding: 14px 28px;
+            border: none;
+            background: #030303;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .hero-text button:hover {
+            transform: scale(1.08);
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 200px;
+            animation: fadeRight 1.2s ease;
+        }
+
+        @keyframes fadeRight {
+            from { transform: translateX(70px) rotate(3deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0); opacity: 1; }
+        }
+
+        .hero-image img {
+            width: 80%;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: floatRotate 4s ease-in-out infinite;
+        }
+
+        @keyframes floatRotate {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .cards {
+            padding: 80px 8%;
+            text-align: center;
+        }
+
+        .cards h2 {
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: #030303;
+            animation: fadeUp 1s ease;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            perspective: 1200px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            animation: cardAppear 1.2s ease forwards;
+            opacity: 0;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes cardAppear {
+            from { transform: translateY(50px) rotate(-5deg) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
+        }
+
+        .card img {
+            width: 50%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.12) rotate(2deg);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #030303;
+        }
+
+        .card button {
+            padding: 10px 22px;
+            border: none;
+            background: #030303;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .card button:hover {
+            transform: scale(1.1);
+        }
+
+        .card:hover {
+            transform: rotateY(15deg) rotateX(6deg) scale(1.08);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        footer {
+            padding: 30px 8%;
+            background: #ffedf2;
+            text-align: center;
+            color: #030303;
+            animation: fadeUp 1s ease;
+        }
+
+        @keyframes fadeUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-image { margin-top: 30px; }
+            .hero-image img { width: 100%; }
+        }
+
+        .footer { background: #f7f7f7; }
+        .accordion .item { border-bottom: 1px solid #b67878; }
+        .accordion .title {
+            width: 100%; background: none; border: none;
+            padding: 15px 0; font-size: 16px; font-weight: 600;
+            text-align: left; display: flex; justify-content: space-between; cursor: pointer;
+        }
+        .accordion .content { display: none; padding-bottom: 12px; }
+        .accordion .content a { display: block; text-decoration: none; color: #555; padding: 6px 0; font-size: 14px; }
+        .social { display: flex; justify-content: center; gap: 22px; font-size: 22px; margin: 30px 0; }
+        .apps { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .apps img { width: 180px; }
+        .back-top { text-align: center; margin: 25px 0; cursor: pointer; }
+        .accordion .content.active { display: block; }
+        .social a { color: inherit; text-decoration: none; transition: transform 0.3s, color 0.3s; }
+        .social a:hover { transform: scale(1.2); color: #c27b56; }
+        .back-top:hover { color: #c27b56; font-weight: bold; transition: color 0.3s, transform 0.3s; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">Event Invite Hub</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#cards">Cards</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>Make Your Wedding Memorable</h1>
+            <p>Choose from our beautiful wedding invitation cards and order your favorite design.</p>
+            <button>Browse Cards</button>
+        </div>
+        <div class="hero-image">
+            <img src="https://www.shutterstock.com/shutterstock/photos/2604865593/display_1500/stock-vector-invitation-wedding-marriage-wedding-congratulations-bride-and-groom-2604865593.jpg"
+                 alt="Wedding Hero" loading="lazy">
+        </div>
+    </section>
+
+    <section class="cards" id="cards">
+        <h2>Our Invitation Cards</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="https://img.freepik.com/premium-vector/vector-beautiful-elegant-wedding-invitation-watercolor-purple-floral_530595-186.jpg" alt="Card 1" loading="lazy">
+                <h3>Elegant Floral</h3>
+                <button>Order Now</button>
+            </div>
+            <div class="card">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.wmjvpD1U-wuKxFhX1JG7HAHaH5?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Card 2" loading="lazy">
+                <h3>Classic Gold</h3>
+                <button>Order Now</button>
+            </div>
+            <div class="card">
+                <img src="https://img.freepik.com/premium-vector/minimal-wedding-card_23-2148742620.jpg?w=360" alt="Card 3" loading="lazy">
+                <h3>Modern Minimal</h3>
+                <button>Order Now</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="accordion">
+            <div class="item">
+                <button class="title">ABOUT US <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="content">
+                    <a href="#">Our Story</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                </div>
+            </div>
+            <div class="item">
+                <button class="title">GET HELP <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="content">
+                    <a href="#">Support</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+            <div class="item">
+                <button class="title">EXPLORE <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="content">
+                    <a href="#">Wedding Cards</a>
+                    <a href="#">Birthday Cards</a>
+                    <a href="#">Themes</a>
+                </div>
+            </div>
+            <div class="item">
+                <button class="title">MY ACCOUNT <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="content">
+                    <a href="#">Login</a>
+                    <a href="#">My Orders</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="social">
+            <a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.pinterest.com" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+        </div>
+
+        <div class="apps">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+        </div>
+
+        <div class="back-top">
+            Back to Top <i class="fa-solid fa-arrow-up"></i>
+        </div>
+
+        <p>&copy; 2026 Event Invite Hub | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        const accordionItems = document.querySelectorAll('.accordion .item');
+
+        accordionItems.forEach(item => {
+            const btn = item.querySelector('.title');
+            const content = item.querySelector('.content');
+
+            btn.addEventListener('click', () => {
+                accordionItems.forEach(i => i.querySelector('.content').classList.remove('active'));
+                content.classList.toggle('active');
+            });
+
+            const links = content.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', () => { content.classList.remove('active'); });
+            });
+        });
+
+        const backTop = document.querySelector('.back-top');
+        backTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>
